@@ -9,21 +9,23 @@ mongoDB = ''
 
 Host = 'dcccluster.uab.es'
 Port = 8200
-
+## Creamos el string de conexión a MongoDB con el host y el Port que pusimos.
 DSN = "mongodb://{}:{}".format(Host, Port)
-
+## especificamos el nombre de la BD y usamos el MongoClient
 conn = MongoClient(DSN)
 bd = conn["projecte"]
-
+##"verificamos con el "--delete_all" si pasaron los argumentos y "--bd" para eliminar la base de datos especificada en el argumento siguiente
 try:
     if sys.argv[3] == "--delete_all" and sys.argv[4] == "--bd":
         conn.drop_database(sys.argv[5])
         print("S'ha eliminat correctament la base de dades", sys.argv[5])
 except:
     pass
+## Se verifica si paso un archivo de Excel como argumento o no.
 try:
     file = sys.argv[2]
     if file is not None:
+          ## Se leen los datos de la hoja "Colleccions-Publicacions" del archivo de Excel y lo transformamos a JSON.
         coll_pub = pd.read_excel(file, sheet_name="Colleccions-Publicacions")
         coll_pub = coll_pub.to_json(orient='records')
         coll_pubjson = json.loads(coll_pub)
@@ -60,5 +62,5 @@ try:
         print("S'han insertat totes les dades correctament a la base de dades.")
 except:
     print("No has passat cap arxiu de dades o el tipus és incorrecte")
-        
+##Ceramos la conexion a MongoDB        
 conn.close()
