@@ -14,7 +14,8 @@ DSN = "mongodb://{}:{}".format(Host, Port)
 ## especificamos el nombre de la BD y usamos el MongoClient
 conn = MongoClient(DSN)
 bd = conn["projecte"]
-##"verificamos con el "--delete_all" si pasaron los argumentos y "--bd" para eliminar la base de datos especificada en el argumento siguiente
+##"verificamos con el "--delete_all" si pasaron los argumentos
+## y "--bd" para eliminar la base de datos especificada en el argumento siguiente
 try:
     if sys.argv[3] == "--delete_all" and sys.argv[4] == "--bd":
         conn.drop_database(sys.argv[5])
@@ -29,6 +30,8 @@ try:
         coll_pub = pd.read_excel(file, sheet_name="Colleccions-Publicacions")
         coll_pub = coll_pub.to_json(orient='records')
         coll_pubjson = json.loads(coll_pub)
+        ##Creamos o accedemos a la colección "coll_pub" en la base de datos
+        ##y se insertan los documentos leidos anteriormente
         try:
             coll = bd.create_collection("coll_pub")
         except:
