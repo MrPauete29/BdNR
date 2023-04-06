@@ -36,7 +36,7 @@ try:
         for doc in coll_pubjson:
             if coll.find_one(doc) is None:
                 coll.insert_one(doc)
-
+        ##Hacemos lo mismo que antes pero para las hohjas "Personatges" y "Artistes".
         personatges = pd.read_excel(file, sheet_name="Personatges")
         personatges = personatges.to_json(orient='records')
         personatgesjson = json.loads(personatges)
