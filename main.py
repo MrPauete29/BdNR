@@ -65,5 +65,5 @@ try:
         print("S'han insertat totes les dades correctament a la base de dades.")
 except:
     print("No has passat cap arxiu de dades o el tipus és incorrecte")
-##Ceramos la conexion a MongoDB        
+##Cerramos la conexion a MongoDB        
 conn.close()
